@@ -1,0 +1,18 @@
+body {
+    height: 10rem;
+    width: 15rem;
+    text-align: center;
+}
+
+.modal-header {
+    font-size: 1rem;
+}
+
+.input {
+    width: 3rem;
+}
+
+.modal-container {
+    display: flex;
+    flex-direction: column;
+}
