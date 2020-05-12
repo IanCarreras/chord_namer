@@ -1,5 +1,3 @@
-const {notes, intervalsArray, chordStructures} = require('./data')
-
 const orderByRoot = (root) => {
     let firstPiece = []
     let secondPiece = []
@@ -41,4 +39,4 @@ const nameChord = (chordNotes) => {
 }
 
 const chordNotes = ['e', 'g', 'b']
-nameChord(chordNotes)
+// nameChord(chordNotes)

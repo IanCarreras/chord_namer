@@ -46,9 +46,3 @@ const chordStructures = [
         intervals: ['b3', '5', '6']
     }
 ]
-
-module.exports = {
-    notes,
-    intervalsArray,
-    chordStructures
-}

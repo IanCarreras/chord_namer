@@ -1,5 +1,4 @@
 {
-    
     "manifest_version": 2,
     "name": "Chord Namer",
     "description": "Returns Chord Name",
@@ -10,7 +9,12 @@
         "default_popup": "popup.html"
     },
     "background": {
-        "scripts": ["background.js"]
+        "scripts": [
+            "data.js",
+            "controller.js",
+            "background.js"
+        ],
+        "persistent": false
     },
     "permissions": ["activeTab"]
 }
