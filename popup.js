@@ -1,4 +1,5 @@
-const notes = ['a', 'a#', 'b', 'c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#']
+const notesArrayWithSharps = ['a', 'a#', 'b', 'c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#']
+const notesArrayWithFlats = ['a', 'bb', 'b', 'c', 'db', 'd', 'eb', 'e', 'f', 'gb', 'g', 'ab']
 const intervalsArray = ['1', 'b2', '2', 'b3', '3', '4', 'b5', '5', 'b6', '6', 'b7', '7']
 const chordStructures = [
     {
@@ -31,10 +32,16 @@ const chordStructures = [
     }
 ]
 
+const whichArray = () => {
+
+}
+
+// returns a concatinated array with the root as it's first element
 const orderByRoot = (root) => {
     let firstPiece = []
     let secondPiece = []
-    notes.forEach(note => {
+    notesArrayWithSharps.forEach(note => {
+        const notesArrayWithFlats = []
         if(note !== root && firstPiece.length === 0) {
             secondPiece.push(note)
         } else {
@@ -44,19 +51,27 @@ const orderByRoot = (root) => {
     return firstPiece.concat(secondPiece)
 } 
 
-
+// takes an array and 'note' value
+// returns the position of the given note in the given array
 const noteIndex = (array, note) => {
     return array.findIndex(element => {
         return note === element
     })
 }
 
+// takes an array
+// compares the array with the arrays in the chordStructures array
+// returns the position of the matching array
 const chordIndex = (chordIntervals) => {
     return chordStructures.findIndex(element => {
         return chordIntervals.join('') == element.intervals.join('')
     })
 }
 
+// takes an array 
+// sorts the array
+// iterates through the given array and pushes values from the intervalsArray into a new array using noteIndex()
+// returns the new array
 const chordIntervals = (chordNotes) => {
     let rootedArray = orderByRoot(chordNotes[0])
     let chordIntervals = []
@@ -66,6 +81,9 @@ const chordIntervals = (chordNotes) => {
     return chordIntervals
 }
 
+// takes an array
+// gets the chord object in the chordStructures array using chordIndex()
+// returns a string naming the chord from the user inputed notes
 const nameChord = (chordNotes) => {
     let chord = chordIndex(chordIntervals(chordNotes))
     return chordOutput.innerHTML = `${chordNotes[0].toUpperCase()} ${chordStructures[chord].name}` 
@@ -74,9 +92,11 @@ const nameChord = (chordNotes) => {
 let note1, note2, note3
 const button = document.getElementById('button')
 const chordOutput = document.getElementById('chord-output')
-button.addEventListener('click', () => getChord(event))
+button.addEventListener('click', () => getChord())
 
-function getChord(event) {
+// gets user's the input values; notes 
+// returns name of the chord using nameChord()
+function getChord() {
     note1 = document.getElementById('input_1').value
     note2 = document.getElementById('input_2').value
     note3 = document.getElementById('input_3').value
@@ -84,3 +104,18 @@ function getChord(event) {
     
     return nameChord(chordNotes)
 }
+
+// function call sequence
+// getChord()
+// nameChord()
+// chordIndex() 
+// chordIntervals()
+// orderByRoot() 
+// noteIndex()
+
+// return sequence back to getChord()
+// noteIndex()
+// chordIntervals()
+// chordIndex()
+// nameChord()
+// getChord()
