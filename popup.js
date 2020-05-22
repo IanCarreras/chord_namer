@@ -32,16 +32,24 @@ const chordStructures = [
     }
 ]
 
-const whichArray = () => {
-
+const whichArray = (chordNotes, notesArrayWithSharps, notesArrayWithFlats) => {
+    let notes = chordNotes.join('')
+    if(notes.includes('#')) {
+        return notesArrayWithSharps
+    } else {
+        return notesArrayWithFlats
+    }
 }
 
+// takes a note value 
+// iterates through a notes array 
+// if the note in the current iteration is not the given value and the firstPiece array is empty push the note to the secondPiece array
 // returns a concatinated array with the root as it's first element
-const orderByRoot = (root) => {
+const orderByRoot = (root, chordNotes) => {
     let firstPiece = []
     let secondPiece = []
-    notesArrayWithSharps.forEach(note => {
-        const notesArrayWithFlats = []
+    let array = whichArray(chordNotes, notesArrayWithSharps, notesArrayWithFlats)
+    array.forEach(note => {
         if(note !== root && firstPiece.length === 0) {
             secondPiece.push(note)
         } else {
@@ -73,7 +81,7 @@ const chordIndex = (chordIntervals) => {
 // iterates through the given array and pushes values from the intervalsArray into a new array using noteIndex()
 // returns the new array
 const chordIntervals = (chordNotes) => {
-    let rootedArray = orderByRoot(chordNotes[0])
+    let rootedArray = orderByRoot(chordNotes[0], chordNotes)
     let chordIntervals = []
     for(let i = 1; i < chordNotes.length; i++) {
         chordIntervals.push(intervalsArray[noteIndex(rootedArray, chordNotes[i])])
@@ -86,7 +94,13 @@ const chordIntervals = (chordNotes) => {
 // returns a string naming the chord from the user inputed notes
 const nameChord = (chordNotes) => {
     let chord = chordIndex(chordIntervals(chordNotes))
-    return chordOutput.innerHTML = `${chordNotes[0].toUpperCase()} ${chordStructures[chord].name}` 
+    let chordNote
+    if (chordNotes[0].length > 1) {
+        chordNote = chordNotes[0][0].toUpperCase()+chordNotes[0][1]
+    } else {
+        chordNote = chordNotes[0]
+    }
+    return chordOutput.innerHTML = `${chordNote} ${chordStructures[chord].name}` 
 }
 
 let note1, note2, note3
