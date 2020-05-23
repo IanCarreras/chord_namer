@@ -29,6 +29,10 @@ const chordStructures = [
     {
         name: 'sus2',
         intervals: ['2', '5']
+    },
+    {
+        name: 'perfect fourth',
+        intervals: ['4']
     }
 ]
 
@@ -92,15 +96,15 @@ const chordIntervals = (chordNotes) => {
 // takes an array
 // gets the chord object in the chordStructures array using chordIndex()
 // returns a string naming the chord from the user inputed notes
-const nameChord = (chordNotes) => {
-    let chord = chordIndex(chordIntervals(chordNotes))
-    let chordNote
-    if (chordNotes[0].length > 1) {
-        chordNote = chordNotes[0][0].toUpperCase()+chordNotes[0][1]
-    } else {
-        chordNote = chordNotes[0]
+
+const nameChord = async (chordNotes) => {
+    try {
+        let chord = await chordIndex(chordIntervals(chordNotes))
+        return chordOutput.innerHTML = `${chordNotes[0].toUpperCase()} ${chordStructures[chord].name}` 
+    } catch(err) {
+        console.log(err)
+        return chordOutput.innerHTML = 'try again'
     }
-    return chordOutput.innerHTML = `${chordNote} ${chordStructures[chord].name}` 
 }
 
 let note1, note2, note3
