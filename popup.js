@@ -36,16 +36,24 @@ const chordStructures = [
     }
 ]
 
-const whichArray = () => {
-
+const whichArray = (chordNotes, notesArrayWithSharps, notesArrayWithFlats) => {
+    let notes = chordNotes.join('')
+    if(notes.includes('#')) {
+        return notesArrayWithSharps
+    } else {
+        return notesArrayWithFlats
+    }
 }
 
+// takes a note value 
+// iterates through a notes array 
+// if the note in the current iteration is not the given value and the firstPiece array is empty push the note to the secondPiece array
 // returns a concatinated array with the root as it's first element
-const orderByRoot = (root) => {
+const orderByRoot = (root, chordNotes) => {
     let firstPiece = []
     let secondPiece = []
-    notesArrayWithSharps.forEach(note => {
-        const notesArrayWithFlats = []
+    let array = whichArray(chordNotes, notesArrayWithSharps, notesArrayWithFlats)
+    array.forEach(note => {
         if(note !== root && firstPiece.length === 0) {
             secondPiece.push(note)
         } else {
@@ -77,7 +85,7 @@ const chordIndex = (chordIntervals) => {
 // iterates through the given array and pushes values from the intervalsArray into a new array using noteIndex()
 // returns the new array
 const chordIntervals = (chordNotes) => {
-    let rootedArray = orderByRoot(chordNotes[0])
+    let rootedArray = orderByRoot(chordNotes[0], chordNotes)
     let chordIntervals = []
     for(let i = 1; i < chordNotes.length; i++) {
         chordIntervals.push(intervalsArray[noteIndex(rootedArray, chordNotes[i])])
@@ -88,6 +96,7 @@ const chordIntervals = (chordNotes) => {
 // takes an array
 // gets the chord object in the chordStructures array using chordIndex()
 // returns a string naming the chord from the user inputed notes
+
 const nameChord = async (chordNotes) => {
     try {
         let chord = await chordIndex(chordIntervals(chordNotes))
