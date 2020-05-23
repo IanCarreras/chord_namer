@@ -29,6 +29,10 @@ const chordStructures = [
     {
         name: 'sus2',
         intervals: ['2', '5']
+    },
+    {
+        name: 'perfect fourth',
+        intervals: ['4']
     }
 ]
 
